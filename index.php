@@ -229,8 +229,7 @@
               <p><em>S1 Teknik Informatika | IPK : 3,15</em></p>
               <ul>
                 <li>
-                  Saat saya belajar di universitas pamulang banyak sekali ilmu yang bisa saya dapatkan seperti mengetahui dunia Teknologi saya bisa membuat website dengan html,css,php dan juga saya bisa membuat aplikasi dekstop dengan menggunakan bahasa pemograman java.
-SMK Bakt.
+                  Saat saya belajar di Smk Bakti Idhata saya benyak sekali mendapatkan ilmu yaitu saya dapat membuat kabel LAN dan juga dapat merakit pc dari mati hingga hidup. Dan walaupun jurusan saya TKJ tetapi saya dapat edit foto dan juga edit video selama saya di Smk Bakti Idhata.
                 </li>
               </ul>
             </div>
@@ -385,41 +384,71 @@ SMK Bakt.
                 <h4>Call:</h4>
                 <p>+62 857-7153-5764</p>
               </div>
-              
             </div>
 
           </div>
 
           <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-              <div class="row">
-                <div class="form-group col-md-6">
-                  <label for="name">Your Name</label>
-                  <input type="text" name="name" class="form-control" id="name" required>
+            <form id="myForm" class="php-email-form">
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label for="name">Your Name</label>
+                    <input type="text" class="form-control" id="name" required>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="name">Your Email</label>
+                    <input type="text" class="form-control" id="email" required>
+                  </div>
                 </div>
-                <div class="form-group col-md-6">
-                  <label for="name">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email" required>
+                <div class="form-group">
+                  <label for="name">Subject</label>
+                  <input type="text" class="form-control" id="subject" required>
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="name">Subject</label>
-                <input type="text" class="form-control" name="subject" id="subject" required>
-              </div>
-              <div class="form-group">
-                <label for="name">Message</label>
-                <textarea class="form-control" name="message" rows="10" required></textarea>
-              </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
-          </div>
-
+                <div class="form-group">
+                  <label for="name">Message</label>
+                  <textarea class="form-control" id="body" rows="10" required></textarea>
+                </div>
+                <div class="text-center"><button type="submit" onclick="sendEmail()" value="Send An Email">Submit</button></div>
+              </fom>
+              <h4 class="sent-notification"></h4>
         </div>
+                  
+	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript">
+        function sendEmail() {
+            var name = $("#name");
+            var email = $("#email");
+            var subject = $("#subject");
+            var body = $("#body");
+
+            if (isNotEmpty(name) && isNotEmpty(email) && isNotEmpty(subject) && isNotEmpty(body)) {
+                $.ajax({
+                   url: 'sendEmail.php',
+                   method: 'POST',
+                   dataType: 'json',
+                   data: {
+                       name: name.val(),
+                       email: email.val(),
+                       subject: subject.val(),
+                       body: body.val()
+                   }, success: function (response) {
+                        $('#myForm')[0].reset();
+                        $('.sent-notification').text("Message Sent Successfully.");
+                   }
+                });
+            }
+        }
+
+        function isNotEmpty(caller) {
+            if (caller.val() == "") {
+                caller.css('border', '1px solid red');
+                return false;
+            } else
+                caller.css('border', '');
+
+            return true;
+        }
+    </script>
 
       </div>
     </section><!-- End Contact Section -->
